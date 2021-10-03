@@ -36,32 +36,34 @@ namespace DormitoryAlliance.Client.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        [HttpGet("/list")]
         [HttpGet("/list/dormitory{dormitoryId:int}")]
+        [HttpGet("/list/dormitory{dormitoryId:int}/group{groupId:int}")]
         public ViewResult List(int? dormitoryId, int? groupId)
         {
-            var s =
-                (from student in _repository.Students
-                    join dormitory in _repository.Dormitories on student.DormitoryId equals dormitory.Id
-                    join @group in _repository.Groups on student.GroupId equals @group.Id
-                    where dormitoryId == null || student.DormitoryId == dormitoryId
-                    where groupId == null || student.GroupId == groupId
-                    select new Student
-                    {
-                        Id = student.Id,
-                        Name = student.Name ,
-                        Surname = student.Surname ,
-                        Patronymic = student.Patronymic ,
-                        Room = student.Room ,
-                        DormitoryId = student.DormitoryId ,
-                        Dormitory = dormitory,
-                        GroupId = student.GroupId,
-                        Group = @group,
-                        Course = student.Course
-                    });
-                
+            var students =
+                from student in _repository.Students
+                join dormitory in _repository.Dormitories
+                    on student.DormitoryId equals dormitory.Id
+                join @group in _repository.Groups
+                    on student.GroupId equals @group.Id
+                where dormitoryId == null || student.DormitoryId == dormitoryId
+                where groupId == null || student.GroupId == groupId
+                select new Student
+                {
+                    Id = student.Id,
+                    Name = student.Name ,
+                    Surname = student.Surname ,
+                    Patronymic = student.Patronymic ,
+                    Room = student.Room ,
+                    DormitoryId = student.DormitoryId ,
+                    Dormitory = dormitory,
+                    GroupId = student.GroupId,
+                    Group = @group,
+                    Course = student.Course
+                };
 
-
-            return View(s);
+            return View(students);
         }
     }
 }
