@@ -32,6 +32,8 @@ namespace DormitoryAlliance.Client
             {
                 options.UseSqlServer(Configuration["ConnectionStrings:DormitoryAllianceConnection"]);
             });
+
+            services.AddScoped<IDormitoryAllianceRepository, EFDormitoryAllianceRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
