@@ -25,37 +25,31 @@ namespace DormitoryAlliance.Client.Models
                 context.Dormitories.AddRange(
                     new Dormitory
                     {
-                        Id = 1,
                         Address = "Студенческий переулок 2, Тел. 704-10-55",
                         Floors = 4
                     },
                     new Dormitory
                     {
-                        Id = 2,
                         Address = "Студенческий переулок 4, Тел. 704-10-52",
                         Floors = 4
                     },
                     new Dormitory
                     {
-                        Id = 2,
                         Address = "Студенческий переулок 6 (иностранные студенты), Тел. 704-10-56",
                         Floors = 5
                     },
                     new Dormitory
                     {
-                        Id = 4,
                         Address = "Студенческий переулок 8, Тел. 704-10-53",
                         Floors = 5
                     },
                     new Dormitory
                     {
-                        Id = 5,
                         Address = "Студенческий переулок 10, Тел. 704-02-17",
                         Floors = 9
                     },
                     new Dormitory
                     {
-                        Id = 6,
                         Address = "ул. Тимуровцев 5а, Тел. 738-04-15",
                         Floors = 9
                     }
@@ -87,15 +81,18 @@ namespace DormitoryAlliance.Client.Models
                 string[] surnames = { "Злобин", "Колесникова", "Крылова", "Михайлова", "Филиппова", "Антонов", "Васильева", "Романов", "Родин", "Баранов", "Чернов", "Степанов", "Борисов", "Евдокимов", "Мальцев", "Смирнов", "Белов", "Виноградова", "Литвинова", "Долгов", "Ефремова", "Кузнецов", "Орехов", "Бочаров", "Барсуков", "Дмитриева", "Соколов", "Васильев", "Шевелева", "Кириллов" };
                 string[] patronymics = { "Максимович", "Георгиевна", "Ярославовна", "Фёдоровна", "Матвеевна", "Максимович", "Алексеевна", "Дмитриевич", "Иванович", "Михайлович", "Евгеньевич", "Арсентьевич", "Николаевич", "Матвеевич", "Григорьевич", "Михайлович", "Львович", "Николаевна", "Марковна", "Маркович", "Денисовна", "Тимурович", "Матвеевич", "Михайлович", "Иванович", "Денисовна", "Александрович", "Андреевич", "Робертовна", "Даниилович" };
 
-                Student[] students = (Enumerable.Range(1, count).Select(_ => new Student()
+                Student[] students = Enumerable.Range(1, count).Select(_ => new Student
                 {
                     Name = names[rnd.Next(names.Length)],
                     Surname = surnames[rnd.Next(surnames.Length)],
-                    Patronymic = "",
+                    Patronymic = patronymics[rnd.Next(patronymics.Length)],
                     GroupId = rnd.Next(1, context.Groups.Count() + 1),
                     DormitoryId = rnd.Next(1, context.Dormitories.Count() + 1),
-                    Room = 100 + rnd.Next(1, 16)
-                })).ToArray();
+                    Room = 100 + rnd.Next(1, 16),
+                    Course = rnd.Next(1, 7)
+                }).ToArray();
+
+                context.Students.AddRange(students);
 
                 context.SaveChanges();
             }
