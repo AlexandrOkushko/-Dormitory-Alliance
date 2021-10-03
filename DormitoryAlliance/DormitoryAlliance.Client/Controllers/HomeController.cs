@@ -1,4 +1,5 @@
 ﻿using DormitoryAlliance.Client.Models;
+using DormitoryAlliance.Client.Models.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -11,11 +12,12 @@ namespace DormitoryAlliance.Client.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private IDormitoryAllianceRepository _repository;
+        public int PageSize { get; set; } = 4;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IDormitoryAllianceRepository repository)
         {
-            _logger = logger;
+            _repository = repository;
         }
 
         public IActionResult Index()
@@ -32,6 +34,36 @@ namespace DormitoryAlliance.Client.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpGet("/list")]
+        [HttpGet("/list/dormitory{dormitoryId:int}")]
+        [HttpGet("/list/dormitory{dormitoryId:int}/group{groupId:int}")]
+        public ViewResult List(int? dormitoryId, int? groupId)
+        {
+            var students =
+                from student in _repository.Students
+                join dormitory in _repository.Dormitories
+                    on student.DormitoryId equals dormitory.Id
+                join @group in _repository.Groups
+                    on student.GroupId equals @group.Id
+                where dormitoryId == null || student.DormitoryId == dormitoryId
+                where groupId == null || student.GroupId == groupId
+                select new Student
+                {
+                    Id = student.Id,
+                    Name = student.Name ,
+                    Surname = student.Surname ,
+                    Patronymic = student.Patronymic ,
+                    Room = student.Room ,
+                    DormitoryId = student.DormitoryId ,
+                    Dormitory = dormitory,
+                    GroupId = student.GroupId,
+                    Group = @group,
+                    Course = student.Course
+                };
+
+            return View(students);
         }
     }
 }
