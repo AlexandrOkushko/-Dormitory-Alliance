@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
+using DormitoryAlliance.Client.Areas.Identity.Data;
 
 namespace DormitoryAlliance.Client.Models
 {
@@ -94,6 +95,16 @@ namespace DormitoryAlliance.Client.Models
 
                 context.Students.AddRange(students);
 
+                context.SaveChanges();
+            }
+
+            if (!context.Roles.Any())
+            {
+                context.Roles.AddRange(
+                    new Role { Name = "Admin" },
+                    new Role { Name = "Default" }
+                );
+                
                 context.SaveChanges();
             }
         }

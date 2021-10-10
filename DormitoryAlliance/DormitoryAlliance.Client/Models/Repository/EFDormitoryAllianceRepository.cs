@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using DormitoryAlliance.Client.Areas.Identity.Data;
 
 namespace DormitoryAlliance.Client.Models.Repository
 {
@@ -16,5 +17,9 @@ namespace DormitoryAlliance.Client.Models.Repository
         public IQueryable<Group> Groups => _context.Groups;
 
         public IQueryable<Student> Students => _context.Students;
+        
+        public IQueryable<ApplicationUser> Users => _context.Users;
+        
+        public IQueryable<Role> Roles => _context.Roles;
     }
 }
