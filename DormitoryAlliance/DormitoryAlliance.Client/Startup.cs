@@ -27,6 +27,7 @@ namespace DormitoryAlliance.Client
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddRazorPages();
 
             services.AddDbContext<DormitoryAllianceDbContext>(options =>
             {
@@ -54,6 +55,8 @@ namespace DormitoryAlliance.Client
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -61,6 +64,7 @@ namespace DormitoryAlliance.Client
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
 
             SeedData.EnsurePopulated(app);
