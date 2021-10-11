@@ -6,13 +6,20 @@
     <div class="col-md-6 offset-md-3">
         <div class="card login-logout-tab">
             <div class="card-header">
-                <li class="nav-item">
-                    <a class="nav-link" href="/Identity/Account/Login">Sign In</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/Identity/Account/Register">Sign Up</a>
-                </li>
+                <ul class="nav nav-tabs card-header-tabs nav-fill">
+                    <li class="nav-item">
+                        <a class="nav-link font-weight-bold" href="/Identity/Account/Login">
+                            Sign In
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link font-weight-bold" href="/Identity/Account/Register">
+                            Sign Up
+                        </a>
+                    </li>
+                </ul>
             </div>
+            
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
@@ -26,4 +33,16 @@
 
 @section Scripts{
     @RenderSection("Scripts", required: false)
+    
+    <script>
+        $(function() {
+          let current = location.pathname;
+          $('.nav-tabs li a').each(function() {
+            let $this = $(this);
+            if (current.indexOf($this.attr('href')) !== -1) {
+                $this.addClass('active');
+            }
+          })
+        })
+    </script>
 }
