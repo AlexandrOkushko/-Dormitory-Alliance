@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 namespace DormitoryAlliance.Client.Areas.Identity.Data
 {
     // Add profile data for application users by adding properties to the ApplicationUser class
-    [Table("Users")]
+    [Table("Users")] // Rename in sql server 'Users' -> 'AspNetUsers'
     public class ApplicationUser : IdentityUser
     {
         [PersonalData, Required]
