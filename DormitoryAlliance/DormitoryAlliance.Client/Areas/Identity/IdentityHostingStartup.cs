@@ -20,7 +20,10 @@ namespace DormitoryAlliance.Client.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("DormitoryAllianceConnection")));
 
-                services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                services.AddDefaultIdentity<ApplicationUser>(options =>
+                    {
+                        options.SignIn.RequireConfirmedAccount = false;
+                    })
                     .AddEntityFrameworkStores<AuthDbContext>();
             });
         }
