@@ -43,27 +43,71 @@ namespace DormitoryAlliance.Client.Controllers
         {
             var students =
                 from student in _repository.Students
+                join @room in _repository.Rooms
+                    on student.RoomId equals @room.Id
                 join dormitory in _repository.Dormitories
-                    on student.DormitoryId equals dormitory.Id
+                    on @room.DormitoryId equals dormitory.Id
                 join @group in _repository.Groups
                     on student.GroupId equals @group.Id
-                where dormitoryId == null || student.DormitoryId == dormitoryId
+                
+                where dormitoryId == null || @room.DormitoryId == dormitoryId
                 where groupId == null || student.GroupId == groupId
                 select new Student
                 {
                     Id = student.Id,
-                    Name = student.Name ,
-                    Surname = student.Surname ,
-                    Patronymic = student.Patronymic ,
-                    Room = student.Room ,
-                    DormitoryId = student.DormitoryId ,
-                    Dormitory = dormitory,
+                    Name = student.Name,
+                    Surname = student.Surname,
+                    Patronymic = student.Patronymic,
+                    RoomId = student.RoomId,
+                    Room = @room,
                     GroupId = student.GroupId,
                     Group = @group,
                     Course = student.Course
                 };
 
             return View(students);
+        }
+
+        [HttpGet("/d")]
+        public ViewResult Dormitory()
+        {
+            var flours =
+                from dormitory in _repository.Dormitories
+                select dormitory.Id;
+
+            return View(flours);
+        }
+
+        [HttpGet("/d{id:int}")]
+        public ViewResult Floors(int id)
+        {
+            int floors =
+                (from dormitory in _repository.Dormitories
+                where dormitory.Id == id
+                select dormitory.Floors).First();
+
+            return View((id, floors));
+        }
+
+        [HttpGet("/d{dormitoryId:int}/f{floor:int}")]
+        public ViewResult Rooms(int dormitoryId, int floor)
+        {
+            var rooms =
+                from room in _repository.Rooms
+                join d in _repository.Dormitories
+                    on room.DormitoryId equals d.Id
+                where d.Id == dormitoryId 
+                && room.Number > floor * 100
+                && room.Number < floor * 100 + 100
+                select new Room
+                {
+                    Id = room.Id,
+                    Number = room.Number,
+                    DormitoryId = room.DormitoryId,
+                    Dormitory = d
+                };
+
+            return View(rooms);
         }
     }
 }

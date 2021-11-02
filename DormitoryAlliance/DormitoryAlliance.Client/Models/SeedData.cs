@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DormitoryAlliance.Client.Models
@@ -72,9 +73,27 @@ namespace DormitoryAlliance.Client.Models
                 context.SaveChanges();
             }
 
+            if (!context.Rooms.Any())
+            {
+                List<Room> rooms = new();
+
+                for (int dormitory = 1; dormitory <= 6; dormitory++)
+                    for (int floor = 1; floor <= 4; floor++)
+                        for (int room = 1; room <= 30; room++)
+                            rooms.Add(new()
+                            {
+                                DormitoryId = dormitory,
+                                Number = floor * 100 + room
+                            });
+
+                context.Rooms.AddRange(rooms);
+
+                context.SaveChanges();
+            }
+
             if (!context.Students.Any())
             {
-                const int count = 30;
+                const int count = 3000;
                 var rnd = new System.Random();
 
                 string[] names = { "Артём", "София", "Мария", "Полина", "Полина", "Иван", "Софья", "Пётр", "Мирослав", "Руслан", "Тимур", "Константин", "Матвей", "Макар", "Арсений", "Александр", "Алексей", "Злата", "Ника", "Адам", "Анна", "Эмир", "Александр", "Даниил", "Марк", "Виктория", "Алексей", "Семён", "Аврора", "Герман" };
@@ -87,8 +106,7 @@ namespace DormitoryAlliance.Client.Models
                     Surname = surnames[rnd.Next(surnames.Length)],
                     Patronymic = patronymics[rnd.Next(patronymics.Length)],
                     GroupId = rnd.Next(1, context.Groups.Count() + 1),
-                    DormitoryId = rnd.Next(1, context.Dormitories.Count() + 1),
-                    Room = 100 + rnd.Next(1, 16),
+                    RoomId = rnd.Next(1, context.Rooms.Count() + 1),
                     Course = rnd.Next(1, 7)
                 }).ToArray();
 
