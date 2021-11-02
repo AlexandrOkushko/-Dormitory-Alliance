@@ -37,7 +37,7 @@
                 @Html.DisplayNameFor(model => model.Room)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Dormitory)
+                @Html.DisplayNameFor(model => model.Room.Dormitory)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Group)
@@ -63,7 +63,7 @@
                 @Html.DisplayFor(modelItem => item.Room)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Dormitory.Address)
+                @Html.DisplayFor(modelItem => item.Room.Dormitory.Address)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Group.Name)
