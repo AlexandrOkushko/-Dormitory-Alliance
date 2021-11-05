@@ -5,6 +5,7 @@
 }
 
 <h1>Комнаты в общаге</h1>
+<div id="PlaceHolderHere"></div>
 
 @if (Model.ToList().Any())
 {
@@ -30,7 +31,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Dormitory.Address)
             </td>
-            <td>|</td>
+            <td>
+                <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#roommates"
+                        data-url="@Url.Action($"Roommates{@item.Id}")">
+                    Show @item.Id
+                </button>
+            </td>
         </tr>
 }
     </tbody>

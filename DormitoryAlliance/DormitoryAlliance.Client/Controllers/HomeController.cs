@@ -109,5 +109,27 @@ namespace DormitoryAlliance.Client.Controllers
 
             return View(rooms);
         }
+
+        [HttpGet("/Home/Roommates{Id:int}")]
+        public IActionResult Roommates(int Id)
+        {
+            var roommates =
+                from student in _repository.Students
+                join @group in _repository.Groups
+                    on student.GroupId equals @group.Id
+                where student.RoomId == Id
+                select new Student
+                {
+                    Id = student.Id,
+                    Name = student.Name,
+                    Surname = student.Surname,
+                    Patronymic = student.Patronymic,
+                    GroupId = student.GroupId,
+                    Group = @group,
+                    Course = student.Course
+                };
+
+            return PartialView("_RoommatesModelPartial", roommates);
+        }
     }
 }
