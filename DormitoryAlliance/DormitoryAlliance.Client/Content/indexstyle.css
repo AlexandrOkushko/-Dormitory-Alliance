@@ -1,0 +1,79 @@
+﻿body @import url("https://fonts.googleapis.com/css?family=Patua+One");
+
+body .box {
+    position: relative;
+    max-height: 255px;
+    height: 255px;
+    background-color: #C8E6C9;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    overflow: hidden;
+    margin: 10px;
+}
+
+body .box .content-hover {
+    transform: scale(0, 0);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: #4dc35b;
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+    padding: 2em 2em;
+}
+
+    body .box .content-hover h1 {
+        color: #ffffff;
+        font-size: 1.5em;
+        text-transform: uppercase;
+        font-family: "Patua One", cursive;
+        font-style: italic;
+    }
+
+    body .box .content-hover p {
+        text-align: left;
+        color: #ffffff;
+    }
+
+body .box .content {
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+}
+
+    body .box .content img {
+        width: 160px;
+    }
+
+    body .box .content p {
+        text-align: center;
+        font-size: 12.5em;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-top: -0.1f5em;
+    }
+
+body .box:hover > .content-hover {
+    transform: scale(1, 1);
+    cursor: pointer;
+}
+
+.col {
+    background-color: #ffffff;
+    border-color: black;
+    border-width: 3px 7px 7px 4px;
+    border: solid #333;
+    text-align: center;
+}
+
+    .col > .colroom {
+        background-color: #ffffff;
+        border-color: black;
+        border-width: 3px 7px 7px 4px;
+        border: solid #333;
+        text-align: center;
+    }
+}
