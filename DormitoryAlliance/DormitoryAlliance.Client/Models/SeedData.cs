@@ -77,9 +77,9 @@ namespace DormitoryAlliance.Client.Models
             {
                 List<Room> rooms = new();
 
-                for (int dormitory = 1; dormitory <= 6; dormitory++)
-                    for (int floor = 1; floor <= 4; floor++)
-                        for (int room = 1; room <= 30; room++)
+                for (int dormitory = 6; dormitory <= 6; dormitory++)
+                    for (int floor = 2; floor <= 9; floor++)
+                        for (int room = 1; room <= 27; room++)
                             rooms.Add(new()
                             {
                                 DormitoryId = dormitory,
@@ -93,7 +93,7 @@ namespace DormitoryAlliance.Client.Models
 
             if (!context.Students.Any())
             {
-                const int count = 3000;
+                const int count = 700;
                 var rnd = new System.Random();
 
                 string[] names = { "Артём", "София", "Мария", "Полина", "Полина", "Иван", "Софья", "Пётр", "Мирослав", "Руслан", "Тимур", "Константин", "Матвей", "Макар", "Арсений", "Александр", "Алексей", "Злата", "Ника", "Адам", "Анна", "Эмир", "Александр", "Даниил", "Марк", "Виктория", "Алексей", "Семён", "Аврора", "Герман" };
