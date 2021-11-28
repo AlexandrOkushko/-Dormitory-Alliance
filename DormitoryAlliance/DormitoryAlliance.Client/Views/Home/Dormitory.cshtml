@@ -1,0 +1,29 @@
+﻿@model IEnumerable<int>
+
+@{
+    ViewData["Title"] = "Dormitory";
+}
+
+<h1>Dormitory</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Выберете общагу
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    <a href="d@(item)">
+                        @item
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

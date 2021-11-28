@@ -7,6 +7,8 @@ namespace DormitoryAlliance.Client.Models.Repository
     {
         IQueryable<Dormitory> Dormitories { get; }
 
+        IQueryable<Room> Rooms { get; }
+
         IQueryable<Group> Groups { get; }
 
         IQueryable<Student> Students { get; }

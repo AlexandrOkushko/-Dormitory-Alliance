@@ -22,13 +22,10 @@ namespace DormitoryAlliance.Client.Models
         [Column(TypeName = "nvarchar(30)")]
         public string Patronymic { get; set; }
 
-        [Required]
-        public int Room { get; set; }
+        public int RoomId { get; set; }
 
-        public int DormitoryId { get; set; }
-
-        [ForeignKey("DormitoryId")]
-        public Dormitory Dormitory { get; set; }
+        [ForeignKey("RoomId")]
+        public Room Room { get; set; }
 
         public int GroupId { get; set; }
 

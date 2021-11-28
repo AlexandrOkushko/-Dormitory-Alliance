@@ -1,0 +1,44 @@
+﻿@model IEnumerable<DormitoryAlliance.Client.Models.Room>
+
+@{
+    ViewData["Title"] = "Rooms";
+}
+
+<h1>Комнаты в общаге</h1>
+<div id="PlaceHolderHere"></div>
+
+@if (Model.ToList().Any())
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Выберете комнату
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dormitory)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model)
+{
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dormitory.Address)
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#roommates"
+                        data-url="@Url.Action($"Roommates{@item.Id}")">
+                    Show @item.Id
+                </button>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+}

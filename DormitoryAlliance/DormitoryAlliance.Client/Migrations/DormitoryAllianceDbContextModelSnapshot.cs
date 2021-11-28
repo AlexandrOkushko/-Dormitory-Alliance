@@ -16,7 +16,7 @@ namespace DormitoryAlliance.Client.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.10")
+                .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("DormitoryAlliance.Client.Areas.Identity.Data.ApplicationUser", b =>
@@ -135,6 +135,26 @@ namespace DormitoryAlliance.Client.Migrations
                     b.ToTable("Groups");
                 });
 
+            modelBuilder.Entity("DormitoryAlliance.Client.Models.Room", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("DormitoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DormitoryId");
+
+                    b.ToTable("Rooms");
+                });
+
             modelBuilder.Entity("DormitoryAlliance.Client.Models.Student", b =>
                 {
                     b.Property<int>("Id")
@@ -143,9 +163,6 @@ namespace DormitoryAlliance.Client.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Course")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DormitoryId")
                         .HasColumnType("int");
 
                     b.Property<int>("GroupId")
@@ -158,7 +175,7 @@ namespace DormitoryAlliance.Client.Migrations
                     b.Property<string>("Patronymic")
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<int>("Room")
+                    b.Property<int>("RoomId")
                         .HasColumnType("int");
 
                     b.Property<string>("Surname")
@@ -167,9 +184,9 @@ namespace DormitoryAlliance.Client.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DormitoryId");
-
                     b.HasIndex("GroupId");
+
+                    b.HasIndex("RoomId");
 
                     b.ToTable("Students");
                 });
@@ -186,6 +203,7 @@ namespace DormitoryAlliance.Client.Migrations
                 });
 
             modelBuilder.Entity("DormitoryAlliance.Client.Models.Student", b =>
+
                 {
                     b.HasOne("DormitoryAlliance.Client.Models.Dormitory", "Dormitory")
                         .WithMany()
@@ -193,15 +211,26 @@ namespace DormitoryAlliance.Client.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Dormitory");
+                });
+
+            modelBuilder.Entity("DormitoryAlliance.Client.Models.Student", b =>
+                {
                     b.HasOne("DormitoryAlliance.Client.Models.Group", "Group")
                         .WithMany()
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Dormitory");
+                    b.HasOne("DormitoryAlliance.Client.Models.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Group");
+
+                    b.Navigation("Room");
                 });
 #pragma warning restore 612, 618
         }
