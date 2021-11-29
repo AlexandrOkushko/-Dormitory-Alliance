@@ -8,13 +8,18 @@ namespace DormitoryAlliance.Client.Models
 {
     public class SeedData
     {
-        public static void EnsurePopulated(IApplicationBuilder app)
+        public static void EnsurePopulated(IApplicationBuilder app, bool dropDatabase = false)
         {
             DormitoryAllianceDbContext context = app
                 .ApplicationServices
                 .CreateScope()
                 .ServiceProvider
                 .GetRequiredService<DormitoryAllianceDbContext>();
+
+            if (dropDatabase)
+            {
+                context.Database.EnsureDeleted();
+            }
 
             if (context.Database.GetPendingMigrations().Any())
             {
@@ -111,6 +116,50 @@ namespace DormitoryAlliance.Client.Models
                 }).ToArray();
 
                 context.Students.AddRange(students);
+
+                context.SaveChanges();
+            }
+
+            if (!context.Roles.Any())
+            {
+                context.Roles.AddRange(new() { Name = "admin" }, new() { Name = "user" });
+
+                context.SaveChanges();
+            }
+
+            if (!context.Users.Any())
+            {
+                int? adminId = context.Roles.FirstOrDefault(x => x.Name.Equals("admin"))?.Id;
+                int? userId = context.Roles.FirstOrDefault(x => x.Name.Equals("user"))?.Id;
+
+                Auth.User admin = new()
+                {
+                    FirstName = "admin",
+                    LastName = "admin",
+                    Email = "admin@example.com",
+                    Password = "admin",
+                    RoleId = adminId
+                };
+
+                Auth.User user1 = new()
+                {
+                    FirstName = "user1F",
+                    LastName = "user1L",
+                    Email = "user1@example.com",
+                    Password = "1234",
+                    RoleId = userId
+                };
+
+                Auth.User user2 = new()
+                {
+                    FirstName = "user2F",
+                    LastName = "user2L",
+                    Email = "user2@example.com",
+                    Password = "1234",
+                    RoleId = userId
+                };
+
+                context.Users.AddRange(admin, user1, user2);
 
                 context.SaveChanges();
             }
