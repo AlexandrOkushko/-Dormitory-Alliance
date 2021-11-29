@@ -1,5 +1,6 @@
 ﻿using DormitoryAlliance.Client.Models;
 using DormitoryAlliance.Client.Models.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,12 +13,12 @@ namespace DormitoryAlliance.Client.Controllers
 {
     public class HomeController : Controller
     {
-        private IDormitoryAllianceRepository _repository;
+        private DormitoryAllianceDbContext _context;
         public int PageSize { get; set; } = 4;
 
-        public HomeController(IDormitoryAllianceRepository repository)
+        public HomeController(DormitoryAllianceDbContext context)
         {
-            _repository = repository;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -25,6 +26,7 @@ namespace DormitoryAlliance.Client.Controllers
             return View();
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult Privacy()
         {
             return View();
@@ -39,15 +41,16 @@ namespace DormitoryAlliance.Client.Controllers
         [HttpGet("/list")]
         [HttpGet("/list/dormitory{dormitoryId:int}")]
         [HttpGet("/list/dormitory{dormitoryId:int}/group{groupId:int}")]
+        [Obsolete]
         public ViewResult List(int? dormitoryId, int? groupId)
         {
             var students =
-                from student in _repository.Students
-                join @room in _repository.Rooms
+                from student in _context.Students
+                join @room in _context.Rooms
                     on student.RoomId equals @room.Id
-                join dormitory in _repository.Dormitories
+                join dormitory in _context.Dormitories
                     on @room.DormitoryId equals dormitory.Id
-                join @group in _repository.Groups
+                join @group in _context.Groups
                     on student.GroupId equals @group.Id
                 
                 where dormitoryId == null || @room.DormitoryId == dormitoryId
@@ -68,33 +71,36 @@ namespace DormitoryAlliance.Client.Controllers
             return View(students);
         }
 
+        [Authorize(Roles = "admin, user")]
         [HttpGet("/d")]
         public ViewResult Dormitory()
         {
             var flours =
-                from dormitory in _repository.Dormitories
+                from dormitory in _context.Dormitories
                 select dormitory.Id;
 
             return View(flours);
         }
 
+        [Authorize(Roles = "admin, user")]
         [HttpGet("/d{id:int}")]
         public ViewResult Floors(int id)
         {
             int floors =
-                (from dormitory in _repository.Dormitories
+                (from dormitory in _context.Dormitories
                 where dormitory.Id == id
                 select dormitory.Floors).First();
 
             return View((id, floors));
         }
 
+        [Authorize(Roles = "admin, user")]
         [HttpGet("/d{dormitoryId:int}/f{floor:int}")]
         public ViewResult Rooms(int dormitoryId, int floor)
         {
             var rooms =
-                from room in _repository.Rooms
-                join d in _repository.Dormitories
+                from room in _context.Rooms
+                join d in _context.Dormitories
                     on room.DormitoryId equals d.Id
                 where d.Id == dormitoryId 
                 && room.Number > floor * 100
@@ -110,12 +116,13 @@ namespace DormitoryAlliance.Client.Controllers
             return View(rooms);
         }
 
+        [Authorize(Roles = "admin, user")]
         [HttpGet("/Home/Roommates{Id:int}")]
         public IActionResult Roommates(int Id)
         {
             var roommates =
-                from student in _repository.Students
-                join @group in _repository.Groups
+                from student in _context.Students
+                join @group in _context.Groups
                     on student.GroupId equals @group.Id
                 where student.RoomId == Id
                 select new Student
