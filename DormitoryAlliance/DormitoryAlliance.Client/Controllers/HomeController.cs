@@ -14,7 +14,6 @@ namespace DormitoryAlliance.Client.Controllers
     public class HomeController : Controller
     {
         private DormitoryAllianceDbContext _context;
-        public int PageSize { get; set; } = 4;
 
         public HomeController(DormitoryAllianceDbContext context)
         {

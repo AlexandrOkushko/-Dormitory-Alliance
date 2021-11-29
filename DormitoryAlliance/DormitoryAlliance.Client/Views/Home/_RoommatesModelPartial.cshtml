@@ -61,7 +61,7 @@
                                             @Html.DisplayFor(modelItem => item.Course)
                                         </td>
                                         <td>
-                                            <a asp-controller="Home" asp-action="EditStudent" asp-route-id="@item.Id"><button type="button" class="btn btn-light">Перейти</button></a>
+                                            <a asp-controller="Manage" asp-action="StudentDetails" asp-route-id="@item.Id" class="btn btn-light">Details</a>
                                             Edit [In development]
                                         </td>
                                     </tr>
