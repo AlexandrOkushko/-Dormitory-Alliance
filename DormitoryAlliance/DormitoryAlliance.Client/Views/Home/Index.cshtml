@@ -1,8 +1,129 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <link type="text/css" href="~/css/indexstyle.css" rel="stylesheet" />
+    @*<link rel="stylesheet" href="indexstyle.css" type="css">
+    <link href="@Url.Content("~/Content/indexstyle.css")" rel="stylesheet" type="text/css" />
+    <link href="~/Content/indexstyle.css" rel="stylesheet" type="text/css" />
+    <link href="C:\Users\User\source\repos\AlexandrOkushko\Dormitory-Alliance\DormitoryAlliance\DormitoryAlliance.Client\Content\indexstyle.css" rel="stylesheet" />*@
+</head>
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div class="container">
+        @*<div class="row">
+            <div class="col-12">
+                <h1 class="text-center text-black" style="font-size: 40pt;">Гуртожитки ХНАДУ</h1>
+            </div>
+        </div>*@
+        <h1 class="display-4">Вітаємо Вас на порталі гуртожитків ХНАДУ!</h1>
+        <h3>Оберіть потрібний гуртожиток зі списку нижче.</h3>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-12">
+                    <div class="box">
+                        <div class="content">
+                            <br>
+                            <p>1</p>
+                        </div>
+                        <div class="content-hover" style="background-color:#C62828">
+                            <h1>Гуртожиток №1</h1> <br>
+                            <p>
+                                <b>Адреса: </b>Студентський провулок 2 <br>
+                                <b>Телефон: </b>704-10-55
+                            </p>
+                            <a asp-controller="Home" asp-action="InDevelopment"><button type="button" class="btn btn-light">Перейти</button></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="box">
+                        <div class="content">
+                            <br>
+                            <p>2</p>
+                        </div>
+                        <div class="content-hover" style="background-color:#F9A825">
+                            <h1>Гуртожиток №2</h1> <br>
+                            <p>
+                                <b>Адреса: </b>Студентський провулок 4 <br>
+                                <b>Телефон: </b>704-10-52
+                            </p>
+                            <a asp-controller="Home" asp-action="InDevelopment"><button type="button" class="btn btn-light">Перейти</button></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="box">
+                        <div class="content">
+                            <br>
+                            <p>3</p>
+                        </div>
+                        <div class="content-hover" style="background-color:#00695C">
+                            <h1>Гуртожиток №3</h1> <br>
+                            <p>
+                                <b>Адреса: </b>Студентський провулок 6 <br>
+                                <b>Телефон: </b>704-10-56
+                            </p>
+                            <a asp-controller="Home" asp-action="InDevelopment"> <button type="button" class="btn btn-light">Перейти</button> </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="box">
+                        <div class="content">
+                            <br>
+                            <p>4</p>
+                        </div>
+                        <div class="content-hover" style="background-color:#2E7D32">
+                            <h1>Гуртожиток №4</h1> <br>
+                            <p>
+                                <b>Адреса: </b>Студентський провулок 8 <br>
+                                <b>Телефон: </b>704-10-53
+                            </p>
+                            <a asp-controller="Home" asp-action="InDevelopment"> <button type="button" class="btn btn-light">Перейти</button></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="box">
+                        <div class="content">
+                            <br>
+                            <p>5</p>
+                        </div>
+                        <div class="content-hover" style="background-color:#1565C0">
+                            <h1>Гуртожиток №5</h1> <br>
+                            <p>
+                                <b>Адреса: </b>Студентський провулок 10 <br>
+                                <b>Телефон: </b>704-02-17
+                            </p>
+                            <a asp-controller="Home" asp-action="InDevelopment"> <button type="button" class="btn btn-light">Перейти</button></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="box">
+                        <div class="content">
+                            <br>
+                            <p>6</p>
+                        </div>
+                        <div class="content-hover" style="background-color:#AD1457">
+                            <h1>Гуртожиток №6</h1> <br>
+                            <p>
+                                <b>Адреса: </b>вулиця Тимурівців (Зубенка) 5а<br>
+                                <b>Телефон: </b>738-04-15
+                            </p>
+                            <a href="/scheme/dormitory6"><button type="button" class="btn btn-light">Перейти</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
 </div>

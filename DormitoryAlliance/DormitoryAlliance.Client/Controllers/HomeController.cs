@@ -38,6 +38,32 @@ namespace DormitoryAlliance.Client.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        [HttpGet("/scheme/dormitory{dormitoryId:int}")]
+        public ViewResult Scheme(int dormitoryId)
+        {
+            //var rooms=from number in _repository.Rooms where 
+            var rooms =
+                from room in _repository.Rooms
+                join d in _repository.Dormitories
+                    on room.DormitoryId equals d.Id
+                where d.Id == dormitoryId
+                select new Room
+                {
+                    Id = room.Id,
+                    Number = room.Number,
+                    DormitoryId = room.DormitoryId,
+                    Dormitory = d
+                };
+            rooms = rooms.OrderBy(n => n.Number);
+            return View(rooms);
+        }
+
+        
+        public IActionResult InDevelopment()
+        {
+            return View();
+        }
+
         [HttpGet("/list")]
         [HttpGet("/list/dormitory{dormitoryId:int}")]
         [HttpGet("/list/dormitory{dormitoryId:int}/group{groupId:int}")]
@@ -114,6 +140,29 @@ namespace DormitoryAlliance.Client.Controllers
                 };
 
             return View(rooms);
+        }
+
+        [HttpGet("/Home/Student{Id:int}")]
+        public IActionResult EditStudent(int Id)
+        {
+            var thisstudent = _repository.Students.Where(x => x.Id == Id).FirstOrDefault();
+            //var thisstudent =
+            //    from student in _repository.Students
+            //    join @group in _repository.Groups
+            //        on student.GroupId equals @group.Id
+            //    where student.Id == Id
+            //    select new Student
+            //    {
+            //        Id = student.Id,
+            //        Name = student.Name,
+            //        Surname = student.Surname,
+            //        Patronymic = student.Patronymic,
+            //        GroupId = student.GroupId,
+            //        Group = @group,
+            //        Course = student.Course
+            //    };
+            return View(thisstudent);
+            //return PartialView("_EditStudentModelPartial",thisstudent);
         }
 
         [Authorize(Roles = "admin, user")]
