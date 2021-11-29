@@ -34,7 +34,6 @@
     if (dormId == 6) initialFloor = 2;
     <h1>Кімнати гуртожитку № @dormId</h1>
     <div id="PlaceHolderHere"></div>
-    @*<div id="PlaceHolderHere1"></div>*@
     <nav id="navbar-example2" class="navbar navbar-light bg-light px-3">
         <a class="navbar-brand" href="#" id="scrollspyUp">Поверх</a>
         <ul class="nav nav-pills">
@@ -56,23 +55,6 @@
                 thisFloor = true;
                 <h4 id="scrollspyFloor@(f)" align="center"> <a href="#scrollspyUp" class="nav-link">@(f)-й поверх</a></h4>
 
-                @*<div class="row">
-                    @{
-                             thisFloor = true;
-                             //roomsOnFloor = (int)nums[f, 1] % 100;
-                             for (int r = 0; r < (int)roomsOnFloor / 2 & incr <= count - 1; r++)
-                             {
-                                 <div class="col">
-                                @{
-                                         <button type="button" class="btn btn-light" data-toggle="ajax-modal" data-target="#roommates"
-                                                 data-url="@Url.Action($"Roommates{@nums[incr, 0]}")">
-                                             @nums[incr, 1]
-                                         </button>
-                                 }</div>
-                                 incr += 1;
-                             }
-                     }</div>*@
-                @*<div class="row"><div class="col">Коридор</div></div>*@
                 <div>
                     @{
                         while (thisFloor & incr <= count - 1)
@@ -111,22 +93,11 @@
 
 
             }
-            @*for (int i = 0; i < nums.GetLength(0); i++)
-                {
-                    <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#roommates"
-                            data-url="@Url.Action($"Roommates{@nums[i,0]}")">
-                        @nums[i, 1]
-                    </button>
-                }*@
-
+            
         }
     </div>
 }
 
-@*for (int i = 0; i < Model.Count; i++)
-    {
-
-    }*@
 
 
 
