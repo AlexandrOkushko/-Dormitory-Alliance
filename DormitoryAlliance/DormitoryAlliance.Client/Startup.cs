@@ -1,5 +1,4 @@
 using DormitoryAlliance.Client.Models;
-using DormitoryAlliance.Client.Models.Repository;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
