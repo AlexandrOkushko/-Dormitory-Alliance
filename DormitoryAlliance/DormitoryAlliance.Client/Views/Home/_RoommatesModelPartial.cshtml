@@ -38,7 +38,10 @@
                                     <th>
                                         @Html.DisplayNameFor(model => model.Course)
                                     </th>
-                                    <th></th>
+                                    @if (User.IsInRole("admin"))
+                                    {
+                                        <th></th>
+                                    }
                                 </tr>
                             </thead>
                             <tbody>
@@ -60,10 +63,13 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Course)
                                         </td>
-                                        <td>
-                                            <a asp-controller="Manage" asp-action="StudentDetails" asp-route-id="@item.Id" class="btn btn-light">Details</a>
-                                            Edit [In development]
-                                        </td>
+                                        @if (User.IsInRole("admin"))
+                                        {
+                                            <td>
+                                                <a asp-controller="Manage" asp-action="StudentDetails" asp-route-id="@item.Id" class="btn btn-light">Details</a>
+                                                <a asp-controller="Manage" asp-action="StudentEdit" asp-route-id="@item.Id" class="btn btn-light">Edit</a>
+                                            </td>
+                                        }
                                     </tr>
                                 }
                             </tbody>

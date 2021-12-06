@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -64,22 +65,68 @@ namespace DormitoryAlliance.Client.Controllers
         }
 
         // GET: Manage/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult StudentEdit(int? id)
         {
-            return View();
+            if (id != null)
+            {
+                var student = _context.Students
+                    .Include(s => s.Group)
+                    .Include(s => s.Room)
+                    .FirstOrDefault(x => x.Id == id);
+
+                if (student?.Name != null)
+                {
+                    var rooms = _context.Rooms
+                        .Include(room => room.Dormitory)
+                        .OrderBy(room => room.Number)
+                        .Select(room => new
+                        {
+                            room.Id,
+                            Name = $"{(room.Number % 100 == 27 ? (room.Number.ToString()[0] + "12A" ) : room.Number)} ({room.DormitoryId})"
+                        });
+
+                    ViewBag.Rooms = new SelectList(rooms, "Id", "Name");
+
+                    var groups = _context.Groups
+                        .OrderBy(group => group.Name);
+
+                    ViewBag.Groups = new SelectList(groups, "Id", "Name");
+
+                    return View(student);
+                }
+            }
+
+            Console.WriteLine("Incorect id");
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: Manage/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult StudentEdit(int id, IFormCollection collection)
         {
             try
             {
+                var student = new Student
+                {
+                    Id = id,
+                    Name = collection["Name"],
+                    Surname = collection["Surname"],
+                    Patronymic = collection["Patronymic"],
+                    RoomId = int.TryParse(collection["RoomId"], out int rid) ? rid : 0,
+                    GroupId = int.TryParse(collection["GroupId"], out int gid) ? gid : 0,
+                    Course = int.TryParse(collection["Course"], out int course) ? course : 0
+                };
+
+                _context.Students.Update(student);
+
+                _context.SaveChanges();
+
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 return View();
             }
         }
