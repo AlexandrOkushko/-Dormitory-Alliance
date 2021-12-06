@@ -21,6 +21,8 @@ namespace DormitoryAlliance.Client.Controllers
             _context = context;
         }
 
+        #region Student
+
         // GET: Manage
         public ActionResult StudentIndex()
         {
@@ -199,5 +201,141 @@ namespace DormitoryAlliance.Client.Controllers
                 return View();
             }
         }
+
+        #endregion Student
+
+        #region Group
+
+        // GET: Manage
+        public ActionResult GroupIndex()
+        {
+            var groups = _context.Groups.Take(300).ToList();
+
+            return View(groups);
+        }
+
+        // GET: Manage/GroupDetails/5
+        public ActionResult GroupDetails(int id)
+        {
+            var student = _context.Groups.FirstOrDefault(x => x.Id == id);
+
+            return View(student);
+        }
+
+        // GET: Manage/GroupCreate
+        public ActionResult GroupCreate()
+        {
+            return View();
+        }
+
+        // POST: Manage/GroupCreate
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult GroupCreate(IFormCollection collection)
+        {
+            try
+            {
+                var group = new Group { Name = collection["Name"] };
+
+                if (_context.Groups?.Count(x => x.Name == group.Name) > 0)
+                {
+                    Console.WriteLine("This name already exist.");
+
+                    return View();
+                }
+
+                _context.Groups.Add(group);
+
+                _context.SaveChanges();
+
+                return RedirectToAction(nameof(GroupIndex));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: Manage/GroupEdit/5
+        public ActionResult GroupEdit(int? id)
+        {
+            if (id != null)
+            {
+                var group = _context.Groups.FirstOrDefault(x => x.Id == id);
+
+                if (group?.Name != null)
+                {
+                    return View(group);
+                }
+            }
+
+            Console.WriteLine("Incorect id");
+            return RedirectToAction(nameof(StudentIndex));
+        }
+
+        // POST: Manage/GroupEdit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult GroupEdit(int id, IFormCollection collection)
+        {
+            try
+            {
+                var group = new Group
+                {
+                    Id = id,
+                    Name = collection["Name"]
+                };
+
+                _context.Groups.Update(group);
+
+                _context.SaveChanges();
+
+                return RedirectToAction(nameof(GroupIndex));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return View();
+            }
+        }
+
+        // GET: Manage/GroupDelete/5
+        public ActionResult GroupDelete(int id)
+        {
+            var group = _context.Groups.FirstOrDefault(x => x.Id == id);
+
+            if (group == null)
+            {
+                return RedirectToAction(nameof(GroupIndex));
+            }
+
+            return View(group);
+        }
+
+        // POST: Manage/GroupDelete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult GroupDelete(int id, IFormCollection collection)
+        {
+            try
+            {
+                var group = _context.Groups.Find(id);
+
+                if (group != null)
+                {
+                    _context.Groups.Remove(group);
+
+                    _context.SaveChanges();
+                }
+
+                return RedirectToAction(nameof(GroupIndex));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        #endregion
     }
 }
