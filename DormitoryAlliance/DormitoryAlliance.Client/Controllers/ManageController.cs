@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace DormitoryAlliance.Client.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class ManageController : Controller
     {
         private DormitoryAllianceDbContext _context;
@@ -21,18 +22,16 @@ namespace DormitoryAlliance.Client.Controllers
         }
 
         // GET: Manage
-        [Authorize(Roles = "admin")]
-        public ActionResult Index()
+        public ActionResult StudentIndex()
         {
             var students = _context.Students
                 .Include(s => s.Group)
-                .Include(s => s.Room).ToList();
+                .Include(s => s.Room).Take(300).ToList();
 
             return View(students);
         }
 
         // GET: Manage/StudentDetails/5
-        [Authorize(Roles = "admin, user")]
         public ActionResult StudentDetails(int id)
         {
             var student = _context.Students
@@ -43,20 +42,50 @@ namespace DormitoryAlliance.Client.Controllers
             return View(student);
         }
 
-        // GET: Manage/Create
-        public ActionResult Create()
+        // GET: Manage/StudentCreate
+        public ActionResult StudentCreate()
         {
+            var rooms = _context.Rooms
+                        .Include(room => room.Dormitory)
+                        .OrderBy(room => room.Number)
+                        .Select(room => new
+                        {
+                            room.Id,
+                            Name = $"{(room.Number % 100 == 27 ? (room.Number.ToString()[0] + "12A") : room.Number)} ({room.DormitoryId})"
+                        });
+
+            ViewBag.Rooms = new SelectList(rooms, "Id", "Name");
+
+            var groups = _context.Groups
+                .OrderBy(group => group.Name);
+
+            ViewBag.Groups = new SelectList(groups, "Id", "Name");
+
             return View();
         }
 
-        // POST: Manage/Create
+        // POST: Manage/StudentCreate
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult StudentCreate(IFormCollection collection)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var student = new Student
+                {
+                    Name = collection["Name"],
+                    Surname = collection["Surname"],
+                    Patronymic = collection["Patronymic"],
+                    RoomId = int.TryParse(collection["RoomId"], out int rid) ? rid : 0,
+                    GroupId = int.TryParse(collection["GroupId"], out int gid) ? gid : 0,
+                    Course = int.TryParse(collection["Course"], out int course) ? course : 0
+                };
+
+                _context.Students.Add(student);
+
+                _context.SaveChanges();
+
+                return RedirectToAction(nameof(StudentIndex));
             }
             catch
             {
@@ -64,7 +93,7 @@ namespace DormitoryAlliance.Client.Controllers
             }
         }
 
-        // GET: Manage/Edit/5
+        // GET: Manage/StudentEdit/5
         public ActionResult StudentEdit(int? id)
         {
             if (id != null)
@@ -97,10 +126,10 @@ namespace DormitoryAlliance.Client.Controllers
             }
 
             Console.WriteLine("Incorect id");
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(StudentIndex));
         }
 
-        // POST: Manage/Edit/5
+        // POST: Manage/StudentEdit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult StudentEdit(int id, IFormCollection collection)
@@ -122,7 +151,7 @@ namespace DormitoryAlliance.Client.Controllers
 
                 _context.SaveChanges();
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(StudentIndex));
             }
             catch (Exception ex)
             {
@@ -131,7 +160,7 @@ namespace DormitoryAlliance.Client.Controllers
             }
         }
 
-        // GET: Manage/Delete/5
+        // GET: Manage/StudentDelete/5
         public ActionResult StudentDelete(int id)
         {
             var student = _context.Students.Where(s => s.Id == id)
@@ -141,13 +170,13 @@ namespace DormitoryAlliance.Client.Controllers
 
             if (student == null)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(StudentIndex));
             }
 
             return View(student);
         }
 
-        // POST: Manage/Delete/5
+        // POST: Manage/StudentDelete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult StudentDelete(int id, IFormCollection collection)
@@ -163,7 +192,7 @@ namespace DormitoryAlliance.Client.Controllers
                     _context.SaveChanges();
                 }
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(StudentIndex));
             }
             catch
             {
