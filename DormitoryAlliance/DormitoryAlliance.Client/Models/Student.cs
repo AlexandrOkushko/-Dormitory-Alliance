@@ -25,13 +25,13 @@ namespace DormitoryAlliance.Client.Models
         [Display(Name = "Кімната")]
         public int RoomId { get; set; }
 
-        [ForeignKey("RoomId")]
+        [ForeignKey("RoomId"), Display(Name = "Кімната")]
         public Room Room { get; set; }
 
         [Display(Name = "Група")]
         public int GroupId { get; set; }
 
-        [ForeignKey("GroupId")]
+        [ForeignKey("GroupId"), Display(Name = "Група")]
         public Group Group { get; set; }
 
         [Display(Name = "Курс")]

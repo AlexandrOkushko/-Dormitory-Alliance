@@ -132,18 +132,37 @@ namespace DormitoryAlliance.Client.Controllers
         }
 
         // GET: Manage/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult StudentDelete(int id)
         {
-            return View();
+            var student = _context.Students.Where(s => s.Id == id)
+                .Include(x => x.Group)
+                .Include(x => x.Room).ThenInclude(x => x.Dormitory)
+                .FirstOrDefault();
+
+            if (student == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(student);
         }
 
         // POST: Manage/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult StudentDelete(int id, IFormCollection collection)
         {
             try
             {
+                var student = _context.Students.Find(id);
+
+                if (student != null)
+                {
+                    _context.Students.Remove(student);
+
+                    _context.SaveChanges();
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             catch
