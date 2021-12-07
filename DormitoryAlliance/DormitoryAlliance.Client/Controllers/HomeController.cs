@@ -52,7 +52,6 @@ namespace DormitoryAlliance.Client.Controllers
             return View(rooms);
         }
 
-        
         public IActionResult InDevelopment()
         {
             return View();

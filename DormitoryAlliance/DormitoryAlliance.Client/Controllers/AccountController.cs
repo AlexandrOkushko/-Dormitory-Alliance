@@ -35,7 +35,7 @@ namespace DormitoryAlliance.Client.Controllers
                 User user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
                 if (user == null)
                 {
-                    // добавляем пользователя в бд
+                    // додаємо користувача в бд
                     user = new User
                     {
                         FirstName = model.FirstName,
@@ -53,7 +53,7 @@ namespace DormitoryAlliance.Client.Controllers
                     _context.Users.Add(user);
                     await _context.SaveChangesAsync();
 
-                    await Authenticate(user); // аутентификация
+                    await Authenticate(user); // аутентифікація
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -83,7 +83,7 @@ namespace DormitoryAlliance.Client.Controllers
 
                 if (user != null)
                 {
-                    await Authenticate(user); // аутентификация
+                    await Authenticate(user); // аутентифікація
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -100,18 +100,18 @@ namespace DormitoryAlliance.Client.Controllers
 
         private async Task Authenticate(User user)
         {
-            // создаем один claim
+            // створюємо один claim
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
                 new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role?.Name)
             };
 
-            // создаем объект ClaimsIdentity
+            // створюємо об'єкт ClaimsIdentity
             ClaimsIdentity id = new(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
                 ClaimsIdentity.DefaultRoleClaimType);
 
-            // установка аутентификационных куки
+            // встановлення аутентифікаційних кукі
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
     }

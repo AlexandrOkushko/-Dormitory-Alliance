@@ -125,7 +125,7 @@ namespace DormitoryAlliance.Client.Controllers
                 }
             }
 
-            Console.WriteLine("Incorect id");
+            Console.WriteLine("Incorrect id");
             return RedirectToAction(nameof(StudentIndex));
         }
 
@@ -242,7 +242,7 @@ namespace DormitoryAlliance.Client.Controllers
                     return View();
                 }
 
-                _context.Groups.Add(group);
+                _context.Groups?.Add(group);
 
                 _context.SaveChanges();
 
@@ -267,7 +267,7 @@ namespace DormitoryAlliance.Client.Controllers
                 }
             }
 
-            Console.WriteLine("Incorect id");
+            Console.WriteLine("Incorrect id");
             return RedirectToAction(nameof(StudentIndex));
         }
 
