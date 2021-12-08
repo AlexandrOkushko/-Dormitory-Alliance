@@ -1,24 +1,24 @@
 ﻿@model DormitoryAlliance.Client.Models.Auth.LoginModel
 
-<h2>Вход на сайт</h2>
+<h2>Вхід на сайт</h2>
 <div class="form-group">
-    <a asp-action="Register" asp-controller="Account" class="btn btn-secondary ml-1 mr-1">Регистрация</a>
+    <a asp-action="Register" asp-controller="Account" class="btn btn-secondary ml-1 mr-1">Реєстрація</a>
 </div>
 <form asp-action="Login" asp-controller="Account" asp-anti-forgery="true">
     <div class="validation" asp-validation-summary="ModelOnly"></div>
     <div>
         <div class="form-group">
-            <label asp-for="Email" class="control-label">Введите Email</label>
+            <label asp-for="Email" class="control-label">Введіть Email</label>
             <input type="text" asp-for="Email" class="form-control col-md-6 col-sm-12"/>
             <span asp-validation-for="Email" />
         </div>
         <div class="form-group">
-            <label asp-for="Password" class="control-label">Введите пароль</label>
+            <label asp-for="Password" class="control-label">Введіть пароль</label>
             <input asp-for="Password" class="form-control col-md-6 col-sm-12"/>
             <span asp-validation-for="Password" />
         </div>
         <div class="form-group">
-            <input type="submit" value="Войти" class="btn btn-primary" />
+            <input type="submit" value="Війти" class="btn btn-primary" />
         </div>
     </div>
 </form>

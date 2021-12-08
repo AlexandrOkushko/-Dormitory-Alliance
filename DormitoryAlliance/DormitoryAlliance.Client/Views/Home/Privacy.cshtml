@@ -1,11 +1,11 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Приватність";
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<p>Сайт є засобом відображення інформації, яка знаходиться у відповідних документах. Відповідно поширення або будь-які інші дії з інфорацією регламентуються відповідними чинними документами. </p>
 
 @if (User.IsInRole("admin"))
 {
-    <p>Admin</p>
+    <p>Ви зайшли як адміністратор.</p>
 }

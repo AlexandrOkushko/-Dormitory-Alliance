@@ -5,7 +5,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="roommatesLabel">Roommates</h4>
+                <h4 class="modal-title" id="roommatesLabel">Мешканці кімнати</h4>
                 <button type="button" class="close" data-dismiss="modal">
                     <span>x</span>
                 </button>
@@ -15,7 +15,7 @@
                 <div id="PlaceHolderHere1">
                     @if (!Model.ToArray().Any())
                     {
-                        <h3 class="col">В этой комнате нет студентов</h3>
+                    <h3 class="col">У цій кімнаті немає студентів</h3>
                     }
                     else
                     {
@@ -65,8 +65,8 @@
                                     @if (User.IsInRole("admin"))
                                     {
                                         <td>
-                                            <a asp-controller="Manage" asp-action="StudentDetails" asp-route-id="@item.Id" class="btn btn-light">Details</a>
-                                            <a asp-controller="Manage" asp-action="StudentEdit" asp-route-id="@item.Id" class="btn btn-light">Edit</a>
+                                            <a asp-controller="Manage" asp-action="StudentDetails" asp-route-id="@item.Id" class="btn btn-light">Деталі</a>
+                                            <a asp-controller="Manage" asp-action="StudentEdit" asp-route-id="@item.Id" class="btn btn-light">Редагувати</a>
                                         </td>
                                     }
                                 </tr>
@@ -77,8 +77,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Understood</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
             </div>
         </div>
     </div>

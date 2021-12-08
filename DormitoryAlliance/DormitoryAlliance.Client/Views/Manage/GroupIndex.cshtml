@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<DormitoryAlliance.Client.Models.Group>
 
 <p>
-    <a asp-action="StudentIndex">Go to Students</a> |
-    <a asp-action="StudentCreate">Add New Student</a> |
-    <a asp-action="GroupCreate">Create New Group</a>
+    <a asp-action="StudentIndex">Перейти до студентів</a> |
+    <a asp-action="StudentCreate">Додати нового студента</a> |
+    <a asp-action="GroupCreate">Додати нову групу</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Назва
             </th>
             <th></th>
         </tr>
@@ -21,9 +21,9 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                <a asp-action="GroupEdit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="GroupDetails" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="GroupDelete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="GroupEdit" asp-route-id="@item.Id">Редагувати</a> |
+                <a asp-action="GroupDetails" asp-route-id="@item.Id">Деталі</a> |
+                <a asp-action="GroupDelete" asp-route-id="@item.Id">Видалити</a>
             </td>
         </tr>
 }

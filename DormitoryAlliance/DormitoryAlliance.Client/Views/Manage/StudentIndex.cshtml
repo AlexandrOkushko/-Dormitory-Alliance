@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<DormitoryAlliance.Client.Models.Student>
 
 <p>
-    <a asp-action="GroupIndex">Go to Groups</a> |
-    <a asp-action="StudentCreate">Add New Student</a> |
-    <a asp-action="GroupCreate">Create New Group</a>
+    <a asp-action="GroupIndex">Перейти до груп</a> |
+    <a asp-action="StudentCreate">Додати нового студента</a> |
+    <a asp-action="GroupCreate">Додати нову групу</a>
 </p>
 
-<h1>Test data [Only for developers]</h1>
+<h1>Список студентів (службові дані)</h1>
 
 <table class="table">
     <thead>
@@ -54,9 +54,9 @@
                 @Html.DisplayFor(modelItem => item.Course)
             </td>
             <td>
-                <a asp-action="StudentEdit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="StudentDetails" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="StudentDelete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="StudentEdit" asp-route-id="@item.Id">Редагувати</a> |
+                <a asp-action="StudentDetails" asp-route-id="@item.Id">Деталі</a> |
+                <a asp-action="StudentDelete" asp-route-id="@item.Id">Видалити</a>
             </td>
         </tr>
 }

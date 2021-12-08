@@ -1,6 +1,6 @@
 ﻿@model DormitoryAlliance.Client.Models.Student
 
-<h4>Student</h4>
+<h4>Студент</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -38,9 +38,9 @@
                 <span asp-validation-for="Course" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-                <a asp-action="StudentIndex" class="btn btn-secondary ml-1 mr-1">Back to List</a>
-                <a asp-action="StudentDelete" asp-route-id="@(Model.Id)" class="btn btn-danger">Delete</a>
+                <input type="submit" value="Зберегти" class="btn btn-primary" />
+                <a asp-action="StudentIndex" class="btn btn-secondary ml-1 mr-1">Повернутися до списку</a>
+                <a asp-action="StudentDelete" asp-route-id="@(Model.Id)" class="btn btn-danger">Видалити</a>
             </div>
         </form>
     </div>
