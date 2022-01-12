@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DormitoryAlliance.Client.Models.Auth
 {
-    [Table("Roles")]
+    [Table("roles")]
     public class Role
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

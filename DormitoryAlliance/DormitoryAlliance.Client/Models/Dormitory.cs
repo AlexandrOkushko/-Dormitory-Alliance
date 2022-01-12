@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DormitoryAlliance.Client.Models
 {
-    [Table("Dormitories")]
+    [Table("dormitories")]
     public class Dormitory
     {
         [Key]

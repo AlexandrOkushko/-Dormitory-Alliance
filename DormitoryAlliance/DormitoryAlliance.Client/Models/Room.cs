@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DormitoryAlliance.Client.Models
 {
-    [Table("Rooms")]
+    [Table("rooms")]
     public class Room
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

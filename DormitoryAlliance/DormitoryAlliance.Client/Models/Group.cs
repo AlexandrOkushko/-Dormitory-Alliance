@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DormitoryAlliance.Client.Models
 {
-    [Table("Groups")]
+    [Table("groups")]
     public class Group
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

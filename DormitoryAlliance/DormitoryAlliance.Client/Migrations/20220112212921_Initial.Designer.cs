@@ -3,30 +3,27 @@ using System;
 using DormitoryAlliance.Client.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DormitoryAlliance.Client.Migrations
 {
     [DbContext(typeof(DormitoryAllianceDbContext))]
-    [Migration("20211123204033_Initial")]
+    [Migration("20220112212921_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.11")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("Relational:MaxIdentifierLength", 64)
+                .HasAnnotation("ProductVersion", "5.0.12");
 
             modelBuilder.Entity("DormitoryAlliance.Client.Models.Auth.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -41,8 +38,7 @@ namespace DormitoryAlliance.Client.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -74,8 +70,7 @@ namespace DormitoryAlliance.Client.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -86,15 +81,14 @@ namespace DormitoryAlliance.Client.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Dormitories");
+                    b.ToTable("dormitories");
                 });
 
             modelBuilder.Entity("DormitoryAlliance.Client.Models.Group", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -102,15 +96,14 @@ namespace DormitoryAlliance.Client.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Groups");
+                    b.ToTable("groups");
                 });
 
             modelBuilder.Entity("DormitoryAlliance.Client.Models.Room", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<int>("DormitoryId")
                         .HasColumnType("int");
@@ -122,15 +115,14 @@ namespace DormitoryAlliance.Client.Migrations
 
                     b.HasIndex("DormitoryId");
 
-                    b.ToTable("Rooms");
+                    b.ToTable("rooms");
                 });
 
             modelBuilder.Entity("DormitoryAlliance.Client.Models.Student", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<int>("Course")
                         .HasColumnType("int");
@@ -158,7 +150,7 @@ namespace DormitoryAlliance.Client.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("Students");
+                    b.ToTable("students");
                 });
 
             modelBuilder.Entity("DormitoryAlliance.Client.Models.Auth.User", b =>

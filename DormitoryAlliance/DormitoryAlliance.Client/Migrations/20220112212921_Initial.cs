@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
+using MySql.EntityFrameworkCore.Metadata;
 
 namespace DormitoryAlliance.Client.Migrations
 {
@@ -7,30 +8,30 @@ namespace DormitoryAlliance.Client.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Dormitories",
+                name: "dormitories",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Address = table.Column<string>(type: "nvarchar(100)", nullable: false),
                     Floors = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Dormitories", x => x.Id);
+                    table.PrimaryKey("PK_dormitories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Groups",
+                name: "groups",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(type: "nvarchar(15)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Groups", x => x.Id);
+                    table.PrimaryKey("PK_groups", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -38,7 +39,7 @@ namespace DormitoryAlliance.Client.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(type: "nvarchar(30)", nullable: false)
                 },
                 constraints: table =>
@@ -47,21 +48,21 @@ namespace DormitoryAlliance.Client.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Rooms",
+                name: "rooms",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Number = table.Column<int>(type: "int", nullable: false),
                     DormitoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rooms", x => x.Id);
+                    table.PrimaryKey("PK_rooms", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Rooms_Dormitories_DormitoryId",
+                        name: "FK_rooms_dormitories_DormitoryId",
                         column: x => x.DormitoryId,
-                        principalTable: "Dormitories",
+                        principalTable: "dormitories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -71,7 +72,7 @@ namespace DormitoryAlliance.Client.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     FirstName = table.Column<string>(type: "nvarchar(30)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(30)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(50)", nullable: false),
@@ -90,11 +91,11 @@ namespace DormitoryAlliance.Client.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Students",
+                name: "students",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(type: "nvarchar(30)", nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(30)", nullable: false),
                     Patronymic = table.Column<string>(type: "nvarchar(30)", nullable: true),
@@ -104,34 +105,34 @@ namespace DormitoryAlliance.Client.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Students", x => x.Id);
+                    table.PrimaryKey("PK_students", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Students_Groups_GroupId",
+                        name: "FK_students_groups_GroupId",
                         column: x => x.GroupId,
-                        principalTable: "Groups",
+                        principalTable: "groups",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Students_Rooms_RoomId",
+                        name: "FK_students_rooms_RoomId",
                         column: x => x.RoomId,
-                        principalTable: "Rooms",
+                        principalTable: "rooms",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Rooms_DormitoryId",
-                table: "Rooms",
+                name: "IX_rooms_DormitoryId",
+                table: "rooms",
                 column: "DormitoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Students_GroupId",
-                table: "Students",
+                name: "IX_students_GroupId",
+                table: "students",
                 column: "GroupId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Students_RoomId",
-                table: "Students",
+                name: "IX_students_RoomId",
+                table: "students",
                 column: "RoomId");
 
             migrationBuilder.CreateIndex(
@@ -143,22 +144,22 @@ namespace DormitoryAlliance.Client.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Students");
+                name: "students");
 
             migrationBuilder.DropTable(
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Groups");
+                name: "groups");
 
             migrationBuilder.DropTable(
-                name: "Rooms");
+                name: "rooms");
 
             migrationBuilder.DropTable(
                 name: "Roles");
 
             migrationBuilder.DropTable(
-                name: "Dormitories");
+                name: "dormitories");
         }
     }
 }
