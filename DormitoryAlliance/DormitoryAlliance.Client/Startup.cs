@@ -1,5 +1,5 @@
 using DormitoryAlliance.Client.Models;
-using DormitoryAlliance.Client.Models.Repository;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,7 +33,14 @@ namespace DormitoryAlliance.Client
                 options.UseSqlServer(Configuration["ConnectionStrings:DormitoryAllianceConnection"]);
             });
 
-            services.AddScoped<IDormitoryAllianceRepository, EFDormitoryAllianceRepository>();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                    options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                });
+
+            //services.AddScoped<IDormitoryAllianceRepository, EFDormitoryAllianceRepository>(); // delete this
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,6 +61,7 @@ namespace DormitoryAlliance.Client
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -63,7 +71,7 @@ namespace DormitoryAlliance.Client
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            SeedData.EnsurePopulated(app);
+            SeedData.EnsurePopulated(app, true);
         }
     }
 }

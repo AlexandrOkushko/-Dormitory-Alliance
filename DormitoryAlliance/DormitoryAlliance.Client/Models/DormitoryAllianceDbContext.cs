@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DormitoryAlliance.Client.Models.Auth;
+using Microsoft.EntityFrameworkCore;
 
 namespace DormitoryAlliance.Client.Models
 {
@@ -10,5 +11,7 @@ namespace DormitoryAlliance.Client.Models
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Student> Students { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

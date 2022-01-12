@@ -13,25 +13,28 @@ namespace DormitoryAlliance.Client.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required, Column(TypeName = "nvarchar(30)")]
+        [Required, Column(TypeName = "nvarchar(30)"), Display(Name = "Ім'я")]
         public string Name { get; set; }
 
-        [Required, Column(TypeName = "nvarchar(30)")]
+        [Required, Column(TypeName = "nvarchar(30)"), Display(Name = "Прізвище")]
         public string Surname { get; set; }
 
-        [Column(TypeName = "nvarchar(30)")]
+        [Column(TypeName = "nvarchar(30)"), Display(Name = "По-Батькові")]
         public string Patronymic { get; set; }
 
+        [Display(Name = "Кімната")]
         public int RoomId { get; set; }
 
-        [ForeignKey("RoomId")]
+        [ForeignKey("RoomId"), Display(Name = "Кімната")]
         public Room Room { get; set; }
 
+        [Display(Name = "Група")]
         public int GroupId { get; set; }
 
-        [ForeignKey("GroupId")]
+        [ForeignKey("GroupId"), Display(Name = "Група")]
         public Group Group { get; set; }
 
+        [Display(Name = "Курс")]
         public int Course { get; set; }
     }
 }

@@ -1,73 +1,83 @@
 @model IEnumerable<DormitoryAlliance.Client.Models.Student>
 
-@*<p>
-    <a asp-action="Create">Create New</a>
-</p>*@
 
 <div class="modal fade" id="roommates">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="roommatesLabel">Roommates</h4>
+                <h4 class="modal-title" id="roommatesLabel">Мешканці кімнати</h4>
                 <button type="button" class="close" data-dismiss="modal">
                     <span>x</span>
                 </button>
             </div>
+
             <div class="modal-body">
-                @if (!Model.ToArray().Any())
-                {
-                    <h3 class="col">В этой комнате нет студентов</h3>
-                }
-                else
-                {
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Name)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Surname)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Patronymic)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Group)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Course)
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach (var item in Model)
-                        {
+                <div id="PlaceHolderHere1">
+                    @if (!Model.ToArray().Any())
+                    {
+                    <h3 class="col">У цій кімнаті немає студентів</h3>
+                    }
+                    else
+                    {
+                        <table class="table">
+                            <thead>
                             <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Name)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Surname)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Patronymic)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Group.Name)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Course)
-                                </td>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Name)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Surname)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Patronymic)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Group)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Course)
+                                </th>
+                                @if (User.IsInRole("admin"))
+                                {
+                                    <th></th>
+                                }
                             </tr>
-                        }
-                        </tbody>
-                    </table>
-                }
+                            </thead>
+                            <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Surname)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Patronymic)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Group.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Course)
+                                    </td>
+                                    @if (User.IsInRole("admin"))
+                                    {
+                                        <td>
+                                            <a asp-controller="Manage" asp-action="StudentDetails" asp-route-id="@item.Id" class="btn btn-light">Деталі</a>
+                                            <a asp-controller="Manage" asp-action="StudentEdit" asp-route-id="@item.Id" class="btn btn-light">Редагувати</a>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    }
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Understood</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
             </div>
         </div>
     </div>

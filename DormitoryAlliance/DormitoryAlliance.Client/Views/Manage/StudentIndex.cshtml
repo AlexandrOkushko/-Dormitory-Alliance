@@ -1,25 +1,12 @@
 ﻿@model IEnumerable<DormitoryAlliance.Client.Models.Student>
 
-@{
-    ViewData["Title"] = "List";
-}
+<p>
+    <a asp-action="GroupIndex">Перейти до груп</a> |
+    <a asp-action="StudentCreate">Додати нового студента</a> |
+    <a asp-action="GroupCreate">Додати нову групу</a>
+</p>
 
-<div class="row mb-3">
-    <h1>Student list</h1>
-
-    <div class="dropdown mt-2 ml-3">
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">
-            Examples
-        </button>
-        <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/list">All students</a></li>
-            <li><a class="dropdown-item" href="/list/dormitory1">Sort by dormitory №1</a></li>
-            <li><a class="dropdown-item" href="/list/dormitory2">Sort by dormitory №2</a></li>
-            <li><a class="dropdown-item" href="/list/dormitory3">Sort by dormitory №3</a></li>
-            <li><a class="dropdown-item" href="/list/dormitory5/group1">Sort by dormitory №5 and group</a></li>
-        </ul>
-    </div>
-</div>
+<h1>Список студентів (службові дані)</h1>
 
 <table class="table">
     <thead>
@@ -37,14 +24,12 @@
                 @Html.DisplayNameFor(model => model.Room)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Room.Dormitory)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Group)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Course)
             </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -60,16 +45,18 @@
                 @Html.DisplayFor(modelItem => item.Patronymic)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Room)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Room.Dormitory.Address)
+                @Html.DisplayFor(modelItem => item.Room.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Group.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Course)
+            </td>
+            <td>
+                <a asp-action="StudentEdit" asp-route-id="@item.Id">Редагувати</a> |
+                <a asp-action="StudentDetails" asp-route-id="@item.Id">Деталі</a> |
+                <a asp-action="StudentDelete" asp-route-id="@item.Id">Видалити</a>
             </td>
         </tr>
 }

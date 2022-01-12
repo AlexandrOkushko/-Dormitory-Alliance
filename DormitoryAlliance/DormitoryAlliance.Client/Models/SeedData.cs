@@ -8,13 +8,18 @@ namespace DormitoryAlliance.Client.Models
 {
     public class SeedData
     {
-        public static void EnsurePopulated(IApplicationBuilder app)
+        public static void EnsurePopulated(IApplicationBuilder app, bool dropDatabase = false)
         {
             DormitoryAllianceDbContext context = app
                 .ApplicationServices
                 .CreateScope()
                 .ServiceProvider
                 .GetRequiredService<DormitoryAllianceDbContext>();
+
+            if (dropDatabase)
+            {
+                context.Database.EnsureDeleted();
+            }
 
             if (context.Database.GetPendingMigrations().Any())
             {
@@ -77,9 +82,9 @@ namespace DormitoryAlliance.Client.Models
             {
                 List<Room> rooms = new();
 
-                for (int dormitory = 1; dormitory <= 6; dormitory++)
-                    for (int floor = 1; floor <= 4; floor++)
-                        for (int room = 1; room <= 30; room++)
+                for (int dormitory = 6; dormitory <= 6; dormitory++)
+                    for (int floor = 2; floor <= 9; floor++)
+                        for (int room = 1; room <= 27; room++)
                             rooms.Add(new()
                             {
                                 DormitoryId = dormitory,
@@ -93,7 +98,7 @@ namespace DormitoryAlliance.Client.Models
 
             if (!context.Students.Any())
             {
-                const int count = 3000;
+                const int count = 700;
                 var rnd = new System.Random();
 
                 string[] names = { "Артём", "София", "Мария", "Полина", "Полина", "Иван", "Софья", "Пётр", "Мирослав", "Руслан", "Тимур", "Константин", "Матвей", "Макар", "Арсений", "Александр", "Алексей", "Злата", "Ника", "Адам", "Анна", "Эмир", "Александр", "Даниил", "Марк", "Виктория", "Алексей", "Семён", "Аврора", "Герман" };
@@ -111,6 +116,50 @@ namespace DormitoryAlliance.Client.Models
                 }).ToArray();
 
                 context.Students.AddRange(students);
+
+                context.SaveChanges();
+            }
+
+            if (!context.Roles.Any())
+            {
+                context.Roles.AddRange(new() { Name = "admin" }, new() { Name = "user" });
+
+                context.SaveChanges();
+            }
+
+            if (!context.Users.Any())
+            {
+                int? adminId = context.Roles.FirstOrDefault(x => x.Name.Equals("admin"))?.Id;
+                int? userId = context.Roles.FirstOrDefault(x => x.Name.Equals("user"))?.Id;
+
+                Auth.User admin = new()
+                {
+                    FirstName = "admin",
+                    LastName = "admin",
+                    Email = "admin@example.com",
+                    Password = "admin",
+                    RoleId = adminId
+                };
+
+                Auth.User user1 = new()
+                {
+                    FirstName = "user1F",
+                    LastName = "user1L",
+                    Email = "user1@example.com",
+                    Password = "1234",
+                    RoleId = userId
+                };
+
+                Auth.User user2 = new()
+                {
+                    FirstName = "user2F",
+                    LastName = "user2L",
+                    Email = "user2@example.com",
+                    Password = "1234",
+                    RoleId = userId
+                };
+
+                context.Users.AddRange(admin, user1, user2);
 
                 context.SaveChanges();
             }
